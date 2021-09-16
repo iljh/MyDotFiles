@@ -105,13 +105,22 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 ANDROID_HOME=$HOME/.local/android
+PRIVATE_SHELL_FILE=$HOME/.local/private/shell-script.sh
 export GPG_TTY=$(tty)
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$ANDROID_HOME/cmdline-tools/tools/bin:$ANDROID_HOME/platform-tools:$PATH
+
 
 alias ia="echo \"sdk.dir=$ANDROID_HOME\" >> local.properties"
 if [ -x "$(command -v nvim)" ]; then
     alias vim=nvim
 fi
 
-source $HOME/.local/private/shell-script.sh
+# load private shell script utils
+if [ -f "$PRIVATE_SHELL_FILE" ]; then
+    source $PRIVATE_SHELL_FILE
+fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

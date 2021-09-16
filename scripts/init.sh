@@ -93,3 +93,13 @@ function installPip3() {
 }
 
 installPip3
+
+
+# node
+if [ ! -x "$(command -v npm)" ]; then
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+fi
+if [ -f "$HOME/.zshrc" ]; then
+    source ~/.zshrc
+fi
+nvm install node && npm install -g neovim
