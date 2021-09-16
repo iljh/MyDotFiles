@@ -105,6 +105,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 ANDROID_HOME=$HOME/.local/android
+export GPG_TTY=$(tty)
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$ANDROID_HOME/cmdline-tools/tools/bin:$ANDROID_HOME/platform-tools:$PATH
 
