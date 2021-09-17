@@ -1,14 +1,24 @@
 #!/bin/bash
 
 ANDROID_HOME=$HOME/.local/android
-
+isSudoExist=true
+if [ ! -x "$(command -v sudo)" ]; then
+    isSudoExist=false
+fi
 # update system
-sudo apt update -y
-sudo apt upgrade -y
-sudo apt auto-remove -y
-
-# install required softwares
-sudo apt install build-essential git curl tmux zsh openjdk-8-jdk -y
+if [ "$isSudoExist" = true ]; then
+    sudo apt update -y
+    sudo apt upgrade -y
+    sudo apt auto-remove -y
+    # install required softwares
+    sudo apt install build-essential git curl tmux zsh openjdk-8-jdk -y
+else
+    apt update -y
+    apt upgrade -y
+    apt auto-remove -y
+    # install required softwares
+    apt install build-essential git curl tmux zsh openjdk-8-jdk -y
+fi
 
 # on-my-zsh
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
@@ -71,7 +81,11 @@ fi
 # neovim
 function compileInstallNvim() {
     git clone https://github.com/neovim/neovim.git /tmp/neovim
-    sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl -y
+    if [ "$isSudoExist" = true ]; then
+        sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl -y
+    else
+        apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl -y
+    fi
     cd /tmp/neovim
     cmake -Hthird-party -B.deps -GNinja && cmake --build .deps
     cmake -H. -BBuild -GNinja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=$HOME/.local && cmake --build Build --target install

@@ -38,4 +38,5 @@ if empty(glob(data_dir, '/autoload/plug.vim'))
 endif
 
 call plug#begin(stdpath('data') . '/plugged')
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
